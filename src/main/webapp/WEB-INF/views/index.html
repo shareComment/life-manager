@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <title>无锡自由生活</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <!-- bootstrap -->
+	    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+	    <link th:href="@{/css/bootstrap-overrides.css}" type="text/css" rel="stylesheet" />
+	    <!-- theme -->
+	    <link rel="stylesheet" type="text/css" th:href="@{/css/theme/default.css}" />
+	    <!-- libraries -->
+	    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.css}" />
+	    <link rel="stylesheet" type="text/css" th:href="@{/css/elements/dashboard.css}" />
+	    <link rel="stylesheet" type="text/css" th:href="@{/css/elements/notify.css}" />
+	    <link rel="stylesheet" type="text/css" th:href="@{/css/elements/bootstrap_calendar.css}" />
+	    <link rel="stylesheet" type="text/css" th:href="@{/css/elements/pizza.css}" />
+	    <!-- open sans font -->
+	    <link href='http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
+	    <!--[if lt IE 9]>
+	      <script th:src="@{/js/html5.js}"></script>
+	    <![endif]-->
+	</head>
+	<body>
+		<div th:include="common/header :: header(manager=${session.manager_resource})"></div>
+		<div th:include="common/menu :: menu"></div>
+	    <!-- main container -->
+	    <div class="content">
+	        <div id="pad-wrapper">
+	        	<div id="chan"></div>
+	             <!-- <div th:include="common/footer :: footer"></div> -->
+	        </div><!-- /pad-wrapper -->
+	    </div><!-- content --> 
+	    <!-- scripts -->
+	    <script th:src="@{/js/jquery.min.js}"></script>
+	    <script th:src="@{/js/bootstrap.js}"></script>
+	    <script th:src="@{/js/theme.js}"></script>
+	    <script th:src="@{/js/index.js}"></script>
+	    <script type="text/javascript">
+	    	$('.submenu li').click(function (){
+	    		$('.pointer').remove();
+	    		$(this).parents('li').prepend('<div class="pointer"><div class="arrow"></div><div class="arrow_border"></div></div>');
+	    		$('#chan').load($(this).find('a').attr('url'));
+	    	});
+	    </script>
+	</body>
+</html>

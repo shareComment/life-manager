@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfteam.wxzysh.dao.CommentDao">
+  <resultMap type="com.sfteam.wxzysh.model.Comment" id="commentList">
+  	<id column="comment_id" property="commentId" />
+  	<result column="brand_id" property="brandId" />
+  	<result column="user_id" property="userId" />
+  	<result column="comment_pid" property="commentPid" />
+  	<result column="comment" property="comment" />
+  	<result column="comment_img" property="commentImg" />
+  	<result column="add_time" property="addTime" />
+  	<result column="status" property="status" />
+  	<result column="brand_name" property="brandName" />
+  	<result column="nickname" property="nickname" />
+  </resultMap>
+  <select id="listComment" resultMap="commentList">
+  	<![CDATA[SELECT
+				c.*,b.brand_name,u.nickname
+			FROM
+				life_comment AS c
+			LEFT JOIN
+				life_brand AS b
+			ON
+				c.brand_id = b.brand_id
+			LEFT JOIN
+				life_user AS u
+			ON
+				c.user_id = u.user_id
+			WHERE
+				c.comment_pid = '0'
+		]]>
+  </select>
+
+  <select id="listReply" resultMap="commentList">
+  	SELECT
+		c.*,b.brand_name,u.nickname
+	FROM
+		life_comment AS c
+	LEFT JOIN
+		life_brand AS b
+	ON
+		c.brand_id = b.brand_id
+	LEFT JOIN
+		life_user AS u
+	ON
+		c.user_id = u.user_id
+	WHERE
+		c.comment_pid = #{commentId}
+  </select>
+
+  <select id="updateCommentStatus" parameterType="com.sfteam.wxzysh.model.Comment">
+  	UPDATE life_comment AS c
+	SET
+		c.status = #{status}
+	WHERE
+		c.comment_id = #{commentId}
+  </select>
+
+  <select id="updatePCommentStatus" parameterType="com.sfteam.wxzysh.model.Comment">
+  	UPDATE life_comment AS c
+	SET
+		c.status = #{status}
+	WHERE
+		c.comment_id = #{commentId}
+	<if test="status == 1">
+		OR c.comment_pid = #{commentId}
+	</if>
+  </select>
+</mapper>

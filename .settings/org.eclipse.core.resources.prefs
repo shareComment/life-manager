@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/sfteam/wxzysh/controller/ManagerController.java=UTF-8
+encoding//src/main/java/com/sfteam/wxzysh/model/Manager.java=UTF-8
+encoding//src/main/java/com/sfteam/wxzysh/service/ManagerService.java=UTF-8
+encoding//src/main/java/com/sfteam/wxzysh/service/impl/ManagerServiceImpl.java=UTF-8
+encoding//src/main/java/com/sfteam/wxzysh/utils/BizUtil.java=UTF-8
+encoding//src/main/java/com/sfteam/wxzysh/utils/CommUtil.java=UTF-8
+encoding//src/main/java/com/sfteam/wxzysh/utils/MD5Util.java=UTF-8
+encoding//src/main/resources/conf/jdbc.properties=UTF-8
+encoding//src/main/resources/conf/log4j.properties=UTF-8

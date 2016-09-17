@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfteam.wxzysh.dao.UserDao">
+    <resultMap type="com.sfteam.wxzysh.model.User" id="userList">
+	  	<id column="user_id" property="userId" />
+	  	<result column="nickname" property="nickname" />
+	  	<result column="username" property="username" />
+	  	<result column="telephone" property="telephone" />
+	  	<result column="password" property="password" />
+	  	<result column="salt" property="salt" />
+	  	<result column="email" property="email" />
+	  	<result column="gender" property="gender" />
+	  	<result column="education" property="education" />
+	  	<result column="age" property="collage" />
+	  	<result column="collage" property="age" />
+	  	<result column="avatar" property="avatar" />
+	  	<result column="bonus_point" property="bonusPoint" />
+	  	<result column="grade_id" property="gradeId" />
+	  	<result column="address" property="address" />
+	  	<result column="idcard" property="idcard" />
+	  	<result column="img_a" property="imgA" />
+	  	<result column="img_b" property="imgB" />
+	  	<result column="idcard" property="idcard" />
+	  	<result column="status" property="status" />
+	  	<result column="verified" property="verified" />
+	  	<result column="add_time" property="addTime" />
+	  	<result column="last_time" property="lastTime" />
+	  	<result column="grade_name" property="gradeName" />
+	  	<result column="min_point" property="minPoint" />
+	  	<result column="max_point" property="maxPoint" />
+	  	<result column="grade_color" property="gradeColor" />
+  	</resultMap>
+  	<select id="listUser" resultMap="userList">
+	    SELECT
+	    	u.*,g.grade_name,g.min_point,g.max_point,g.grade_color
+	    FROM
+	    	life_user AS u
+	    LEFT JOIN
+	    	life_grade AS g
+	    ON
+	    	u.grade_id = g.grade_id
+  	</select>
+
+	<select id="getUserById" resultMap="userList">
+	    SELECT
+	    	u.*,g.grade_name,g.min_point,g.max_point,g.grade_color
+	    FROM
+	    	life_user AS u
+	    LEFT JOIN
+	    	life_grade AS g
+	    ON
+	    	u.grade_id = g.grade_id
+	    WHERE
+	    	u.user_id = #{userId}
+  	</select>
+
+	<select id="updateUserStatus" parameterType="com.sfteam.wxzysh.model.User">
+		UPDATE life_user AS u
+		SET
+			u.status = #{status}
+			,u.verified = #{verified}
+		WHERE
+			u.user_id = #{userId}
+	</select>
+</mapper>

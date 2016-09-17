@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <title>无锡自由生活</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <link th:href="@{/js/summernote/summernote.css}" rel="stylesheet" />
+	</head>
+	<body>
+	    <!-- main container -->
+	    <div>
+            <h4>网站公告</h4>
+            <form th:action="@{/content/notice/update}" method="post" id="notice">
+            	<input type="hidden" name="classId" value="0" />
+               <br/>
+               <br/>
+	            <div class="col-lg-12">
+		            <div class="panel panel-default">
+		                <div class="panel-body">
+			                <textarea class="textarea form-control" placeholder="编辑内容 ..." name="content" id="summernote"><span th:text="${content.content}"></span></textarea>
+			            </div>
+		            </div>
+	            </div>
+	            <div class="col-lg-12">
+					<a href="#" class="btn btn-primary pull-left">
+	                	<i class="fa fa-pencil fa-lg"></i> 提交
+	                </a>
+               </div>
+            </form>
+	    </div><!-- content --> 
+	    <!-- /main container -->
+	    <!-- scripts -->
+	    <script th:src="@{/js/jquery.min.js}"></script>
+	    <script th:src="@{/js/bootstrap.js}"></script>
+
+	    <script th:src="@{/js/summernote/summernote.js}"></script>
+	    <script type="text/javascript">
+	    	$(document).ready(function() {
+	    		$('#summernote').summernote({
+	    			height: 390,
+	    			focus: true
+	    		});
+	    		$('#notice a').click(function(){
+	        		$('#notice').submit();
+	        	});
+	    	});
+        </script>
+	</body>
+</html>

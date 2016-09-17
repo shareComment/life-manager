@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfteam.wxzysh.dao.CategoryDao">
+  <resultMap type="com.sfteam.wxzysh.model.Category" id="categoryList">
+  	<id column="cate_id" property="cateId" />
+  	<result column="cate_pid" property="catePid" />
+  	<result column="cate_pname" property="catePname" />
+  	<result column="cate_name" property="cateName" />
+  	<result column="nickname" property="mngName" />
+  	<result column="upd_time" property="updTime" />
+  </resultMap>
+  <select id="listCategory" resultMap="categoryList">
+    SELECT 
+    	c1.cate_id,c1.cate_pid,c2.cate_name AS cate_pname,c1.cate_name,m.nickname,c1.upd_time 
+    FROM 
+    	life_category AS c1 
+    LEFT JOIN 
+    	life_manager AS m 
+    ON 
+    	c1.mng_id = m.mng_id
+	LEFT JOIN
+		life_category as c2
+	ON
+		c1.cate_pid = c2.cate_id
+  </select>
+  
+  <select id="updateCategory" parameterType="com.sfteam.wxzysh.model.Category">
+    UPDATE life_category c
+    SET
+    	c.upd_time = SYSDATE()
+	    <if test="catePid != null">
+	    	,c.cate_pid = #{catePid}
+	    </if>
+	    <if test="cateName != null">
+	    	,c.cate_name = #{cateName}
+	    </if>
+	    <if test="mngId != null">
+	    	,c.mng_id = #{mngId}
+	    </if>
+    WHERE c.cate_id = #{cateId}
+  </select>
+
+  <select id="getCategoryById" resultMap="categoryList">
+  	SELECT c.cate_id,c.cate_pid,c.cate_name,m.nickname,c.upd_time FROM life_category as c,life_manager as m WHERE c.cate_id = #{id} AND c.mng_id = m.mng_id
+  </select>
+
+  <select id="addCategory" parameterType="com.sfteam.wxzysh.model.Category">
+  	INSERT INTO life_category (cate_pid, cate_name, mng_id, upd_time) VALUES (#{catePid}, #{cateName}, #{mngId}, SYSDATE())
+  </select>
+ 
+  <resultMap type="java.util.HashMap" id="supCatePid">
+    <id column="cate_id" property="key" />
+    <result column="cate_name" property="value" />
+  </resultMap>
+  <select id="getCatePid" resultMap="supCatePid">
+  	SELECT c.cate_id,c.cate_name FROM life_category as c WHERE c.cate_pid = '0'
+  </select>
+
+  <resultMap type="com.sfteam.wxzysh.model.Category" id="category">
+  	<id column="cate_id" property="cateId" />
+  	<result column="cate_pid" property="catePid" />
+  	<result column="cate_name" property="cateName" />
+  	<result column="mng_id" property="mngId" />
+  	<result column="upd_time" property="updTime" />
+  </resultMap>
+  <select id="getCategory" parameterType="com.sfteam.wxzysh.model.Category" resultMap="category">
+    SELECT * FROM life_category as c WHERE c.cate_id = #{cateId}
+  </select>
+
+  <resultMap type="java.util.HashMap" id="subCatePid">
+    <id column="cate_id" property="key" />
+    <result column="cate_name" property="value" />
+  </resultMap>
+  <select id="getCateId" resultMap="subCatePid">
+  	<![CDATA[SELECT c.cate_id,c.cate_name FROM life_category as c WHERE c.cate_pid <> '0']]>
+  </select>
+</mapper>

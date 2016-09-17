@@ -1,0 +1,82 @@
+<!-- sidebar -->
+<div th:fragment="menu">
+    <div id="sidebar-nav">
+        <ul id="dashboard-menu">
+              <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a th:href="@{/index}">
+                    <i class="fa fa-home"></i>
+                    <span>后台首页</span>
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="fa fa-tags"></i>
+                    <span>品牌管理</span> <b class="caret"></b>
+                </a>
+                 <ul class="submenu">
+                    <li><a url="/category">分类管理</a></li>
+                    <li><a url="/brand">品牌管理</a></li>
+                    <li><a url="/tag">标签管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="fa fa-user"></i>
+                    <span>会员管理</span> <b class="caret"></b>
+                </a>
+                 <ul class="submenu">
+                    <li><a url="/user">会员管理</a></li>
+                    <li><a url="/grade">等级管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="fa fa-edit"></i>
+                    <span>内容管理</span> <b class="caret"></b>
+                </a>
+                 <ul class="submenu">
+                    <li><a url="/content/sysmsg">系统消息</a></li>
+                    <li><a url="/content/feed">用户反馈</a></li>
+                    <li><a url="/content/notice">网站公告</a></li>
+                    <li><a url="/content/about">关于我们</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="fa fa-bullhorn"></i>
+                    <span>评论管理</span> <b class="caret"></b>
+                </a>
+                <ul class="submenu">
+                	<li><a url="/comment">评论管理</a></li>
+                </ul>
+            </li>
+            <!-- <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="fa fa-money"></i>
+                    <span>积分管理</span> <b class="caret"></b>
+                </a>
+                <ul class="submenu">
+                	<li><a url="/bonus">积分管理</a></li>
+                </ul>
+            </li> -->
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="fa fa-cogs"></i>
+                    <span>系统设置</span> <b class="caret"></b>
+                </a>
+                 <ul class="submenu">
+                    <li><a url="/sysset/carousel">首页轮播</a></li>
+                    <li><a url="/manager">管理员管理</a></li>
+                    <li><a url="/sysset/param">参数设置</a></li>
+                    <!-- <li><a url="/sysset/backup">备份/恢复</a></li>
+                    <li><a url="/sysset/log">日志管理</a></li> -->
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- end sidebar -->

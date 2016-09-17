@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfteam.wxzysh.dao.BrandDao">
+  <resultMap type="com.sfteam.wxzysh.model.Brand" id="brandList">
+  	<id column="brand_id" property="brandId" />
+  	<result column="brand_name" property="brandName" />
+  	<result column="cate_id" property="cateId" />
+  	<result column="cate_name" property="cateName" />
+  	<result column="pc_img" property="pcImg" />
+  	<result column="co_name" property="coName" />
+  	<result column="std_time" property="stdTime" />
+  	<result column="co_address" property="coAddress" />
+  	<result column="biz_scope" property="bizScope" />
+  	<result column="score" property="score" />
+  	<result column="add_time" property="addTime" />
+  	<result column="upd_time" property="updTime" />
+  	<result column="status" property="status" />
+  	<result column="official_website" property="officialWebsite" />
+  </resultMap>
+  <select id="listBrand" resultMap="brandList">
+    SELECT
+		b.brand_id,
+		b.brand_name,
+		c.cate_id,
+		c.cate_name,
+		b.pc_img,
+		b.co_name,
+		b.std_time,
+		b.co_address,
+		b.biz_scope,
+		b.score,
+		b.add_time,
+		b.upd_time,
+		b.official_website,
+		b.`status`
+	FROM
+		life_brand AS b
+	LEFT JOIN
+		life_category AS c
+	ON
+		b.cate_id = c.cate_id
+  </select>
+  
+  <select id="updateBrand" parameterType="com.sfteam.wxzysh.model.Brand">
+    UPDATE life_brand
+    SET
+    	upd_time = SYSDATE()
+    	<if test="brandName != null">
+	    	,brand_name = #{brandName}
+	    </if>
+	    <if test="officialWebsite != null">
+	    	,official_website = #{officialWebsite}
+	    </if>
+	    <if test="cateId != null">
+	    	,cate_id = #{cateId}
+	    </if>
+	    <if test="pcImg != null">
+	    	,pc_img = #{pcImg}
+	    </if>
+	    <if test="wapImg != null">
+	    	,wap_img = #{wapImg}
+	    </if>
+	    <if test="coName != null">
+	    	,co_name = #{coName}
+	    </if>
+	    <if test="stdTime != null">
+	    	,std_time = #{stdTime}
+	    </if>
+	    <if test="coAddress != null">
+	    	,co_address = #{coAddress}
+	    </if>
+	    <if test="bizScope != null">
+	    	,biz_scope = #{bizScope}
+	    </if>
+	    <if test="score != null">
+	    	,score = #{score}
+	    </if>
+	    <if test="brandInfo != null">
+	    	,brand_info = #{brandInfo}
+	    </if>
+	    <if test="status != null">
+	    	,status = #{status}
+	    </if>
+	    <if test="mngId != null">
+	    	,mng_id = #{mngId}
+	    </if>
+    where brand_id = #{brandId}
+  </select>
+
+  <select id="addBrand" parameterType="com.sfteam.wxzysh.model.Brand" resultType="java.lang.String">
+  	INSERT INTO life_brand (brand_name, official_website, cate_id, pc_img, wap_img, co_name, std_time, co_address, biz_scope, brand_info, mng_id, add_time, upd_time) 
+  	VALUES (#{brandName}, #{officialWebsite}, #{cateId}, #{pcImg}, #{wapImg}, #{coName}, #{stdTime}, #{coAddress}, #{bizScope}, #{brandInfo}, #{mngId}, SYSDATE(), SYSDATE())
+  </select>
+
+  <resultMap type="com.sfteam.wxzysh.model.Brand" id="brand">
+  	<id column="brand_id" property="brandId" />
+  	<result column="brand_name" property="brandName" />
+  	<result column="official_website" property="officialWebsite" />
+  	<result column="cate_id" property="cateId" />
+  	<result column="pc_img" property="pcImg" />
+  	<result column="wap_img" property="wapImg" />
+  	<result column="co_name" property="coName" />
+  	<result column="std_time" property="stdTime" />
+  	<result column="co_address" property="coAddress" />
+  	<result column="biz_scope" property="bizScope" />
+  	<result column="score" property="score" />
+  	<result column="brand_info" property="brandInfo" />
+  	<result column="add_time" property="addTime" />
+  	<result column="upd_time" property="updTime" />
+  	<result column="status" property="status" />
+  </resultMap>
+  <select id="getBrand" parameterType="com.sfteam.wxzysh.model.Brand" resultMap="brand">
+    SELECT * FROM life_brand as b WHERE b.brand_id = #{brandId}
+  </select>
+
+  <select id="getTags" resultType="java.lang.String">
+		SELECT
+			t.tag_name
+		FROM
+			life_tag_brand AS tb
+		LEFT JOIN
+			life_tag AS t
+		ON
+			tb.tag_id = t.tag_id
+		WHERE
+			tb.brand_id = #{brandId}
+  </select>
+
+  <select id="getAllTags" resultType="java.lang.String">
+		SELECT
+			t.tag_name
+		FROM
+			life_tag_category AS tc
+		LEFT JOIN
+			life_tag AS t
+		ON
+			tc.tag_id = t.tag_id
+		WHERE
+			tc.cate_id = #{cateId}
+  </select>
+</mapper>

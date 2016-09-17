@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfteam.wxzysh.dao.TagDao">
+    <resultMap type="com.sfteam.wxzysh.model.Tag" id="tagList">
+	  	<id column="tag_id" property="tagId" />
+	  	<result column="tag_name" property="tagName" />
+	  	<result column="mng_id" property="mngId" />
+	  	<result column="nickname" property="mngName" />
+	  	<result column="upd_time" property="updTime" />
+  	</resultMap>
+  	<select id="listTag" resultMap="tagList">
+	    SELECT
+	    	t.tag_id,t.tag_name,t.mng_id,m.nickname,t.upd_time
+	    FROM
+	    	life_tag AS t
+	    LEFT JOIN
+	    	life_manager AS m
+	    ON
+	    	t.mng_id = m.mng_id
+  	</select>
+
+    <select id="addTag" parameterType="com.sfteam.wxzysh.model.Tag">
+		INSERT INTO life_tag (tag_name, mng_id, upd_time) VALUES (#{tagName}, #{mngId}, SYSDATE())
+	</select>
+
+	<select id="getTags" resultType="java.lang.String">
+		SELECT
+	    	t.tag_name
+	    FROM
+	    	life_tag AS t
+	</select>
+
+	<select id="getiTags" resultType="java.lang.String">
+		SELECT
+			t.tag_name
+		FROM
+			life_tag_category AS tc
+		LEFT JOIN
+			life_tag AS t
+		ON
+			tc.tag_id = t.tag_id
+		WHERE
+			tc.cate_id = #{cateId}
+	</select>
+
+	<select id="getShowTags" resultType="java.lang.String">
+		SELECT
+			t.tag_name
+		FROM
+			life_tag_category AS tc
+		LEFT JOIN
+			life_tag AS t
+		ON
+			tc.tag_id = t.tag_id
+		WHERE
+			tc.cate_id = #{cateId}
+		AND
+			tc.visable = '0'
+	</select>
+	
+	<select id="getTagIds" resultType="java.lang.String">
+		SELECT
+	    	t.tag_id
+	    FROM
+	    	life_tag AS t
+	    WHERE
+	    	t.tag_name 
+	    IN
+	    <foreach item="tags" collection="list" open="(" separator="," close=")">  
+			#{tags}
+		</foreach>
+	</select>
+
+	<select id="updateTag" parameterType="com.sfteam.wxzysh.model.Tag">
+		UPDATE life_tag t
+		SET
+    		t.upd_time = SYSDATE()
+    		,t.tag_name = #{tagName}
+    		,t.mng_id = #{mngId}
+    	WHERE
+    		t.tag_id = #{tagId}
+	</select>
+
+	<select id="deleteTags">
+		DELETE
+		FROM
+			life_tag_category
+		WHERE
+			life_tag_category.cate_id = #{cateId}
+	</select>
+
+    <select id="addTagCate" parameterType="com.sfteam.wxzysh.model.Tag">
+    	INSERT INTO life_tag_category (`cate_id`,`tag_id`,`mng_id`,`visable`,`upd_time`) values (#{cateId},#{tagId},#{mngId},#{visable},SYSDATE())
+    </select>
+
+    <select id="addTagBrand" parameterType="com.sfteam.wxzysh.model.Tag">
+    	INSERT INTO life_tag_brand (`brand_id`,`tag_id`,`mng_id`,`upd_time`) values (#{brandId},#{tagId},#{mngId},SYSDATE())
+    </select>
+</mapper>

@@ -1,0 +1,68 @@
+<!-- navbar -->
+<div th:fragment="header(manager)">
+    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/index}"><img th:src="@{/images/logo.png}" alt="logo" class="logo" /></a>
+        </div>
+        <ul class="nav navbar-nav pull-right hidden-xs">
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle hidden-xs" data-toggle="dropdown">
+                	管理员：<span th:text="${manager.nickname}" ></span> <b class="caret"></b> 欢迎您！
+                </a>
+                <ul class="dropdown-menu">
+                	<li><a id="chgPass" href="javascript:void(0);">修改密码</a></li>
+                    <li><a th:href="@{/logout}">退出登录</a></li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+     <!-- 模态框（Modal） -->
+	<div class="modal fade" id="chgPassModal" tabindex="-1" role="dialog" 
+	   aria-labelledby="chgPassModalLabel" aria-hidden="true" data-backdrop="static">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	         <div class="modal-header">
+	            <button type="button" class="close" 
+	               data-dismiss="modal" aria-hidden="true">
+	                  &times;
+	            </button>
+	            <h4 class="modal-title" id="chgPassModalLabel">修改密码</h4>
+	            <div class="alert alert-success" style="display:none;">
+	            	<strong>成功！</strong>操作成功。
+	            </div>
+	            <div class="alert alert-warning" style="display:none;">
+	            	<strong>失败！</strong>操作失败，稍后再试。
+	            </div>
+	         </div>
+	         <div class="modal-body">
+	         	<form class="form-horizontal" role="form">
+	         		<input type="hidden" id="tagId" />
+					<div class="form-group">
+   						<label for="oldPass" class="col-sm-3 control-label">输入原密码：</label>
+   						<div class="col-sm-9">
+      						<input type="password" class="form-control" id="oldPass" placeholder="请输入原密码" />
+   						</div>
+					</div>
+					<div class="form-group">
+   						<label for="newPass1" class="col-sm-3 control-label">输入新密码：</label>
+   						<div class="col-sm-9">
+      						<input type="password" class="form-control" id="newPass1" placeholder="请输入新密码" />
+   						</div>
+					</div>
+					<div class="form-group">
+   						<label for="newPass2" class="col-sm-3 control-label">再一次输入新密码：</label>
+   						<div class="col-sm-9">
+      						<input type="password" class="form-control" id="newPass2" placeholder="请再一次输入原密码" />
+   						</div>
+					</div>
+				</form>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            <button type="button" id="submit" class="btn btn-primary">确认修改</button>
+	         </div>
+	      </div><!-- /.modal-content -->
+	  </div><!-- /.modal -->
+       </div><!-- content --> 
+</div>
+<!-- end navbar -->

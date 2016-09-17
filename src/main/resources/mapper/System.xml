@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfteam.wxzysh.dao.SystemDao">
+  <resultMap type="com.sfteam.wxzysh.model.SystemInfo" id="systemInfoList">
+  	<id column="param_id" property="paramId" />
+  	<result column="remark" property="remark" />
+  	<result column="param_key" property="paramKey" />
+  	<result column="param_value" property="paramValue" />
+  	<result column="mng_id" property="mngId" />
+  	<result column="upd_time" property="updTime" />
+  </resultMap>
+  <select id="getCarousels" resultMap="systemInfoList">
+    SELECT
+    	*
+    FROM
+    	life_parameter AS p
+    LEFT JOIN
+    	life_manager AS m
+    ON
+    	p.mng_id = m.mng_id
+    WHERE
+    	p.param_key = 'CAROUSEL'
+  </select>
+
+  <select id="getParams" resultMap="systemInfoList">
+    <![CDATA[SELECT
+    	*
+    FROM
+    	life_parameter AS p
+    LEFT JOIN
+    	life_manager AS m
+    ON
+    	p.mng_id = m.mng_id
+    WHERE
+    	p.param_key <> 'CAROUSEL']]>
+  </select>
+
+  <select id="updateParam" parameterType="com.sfteam.wxzysh.model.SystemInfo">
+    update life_parameter p
+    set
+    	p.upd_time = SYSDATE()
+    	,p.param_value = #{paramValue}
+    	,p.mng_id = #{mngId}
+    where p.param_key = #{paramKey}
+  </select>
+
+  <select id="updateCarousel" parameterType="com.sfteam.wxzysh.model.SystemInfo">
+    update life_parameter p
+    set
+    	p.upd_time = SYSDATE()
+    	,p.param_value = #{paramValue}
+    	,p.mng_id = #{mngId}
+    where p.param_id = #{paramId}
+  </select>
+</mapper>

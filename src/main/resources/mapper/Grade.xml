@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sfteam.wxzysh.dao.GradeDao">
+    <resultMap type="com.sfteam.wxzysh.model.Grade" id="gradeList">
+	  	<id column="grade_id" property="gradeId" />
+	  	<result column="grade_name" property="gradeName" />
+	  	<result column="min_point" property="minPoint" />
+	  	<result column="max_point" property="maxPoint" />
+	  	<result column="grade_color" property="gradeColor" />
+	  	<result column="upd_time" property="updTime" />
+  	</resultMap>
+  	<select id="listGrade" resultMap="gradeList">
+	    SELECT
+	    	g.*
+	    FROM
+	    	life_grade AS g
+  	</select>
+
+    <select id="updateGrade" parameterType="com.sfteam.wxzysh.model.Grade">
+		UPDATE life_grade g
+	    SET
+	    	g.upd_time = SYSDATE()
+		    <if test="gradeName != null">
+		    	,g.grade_name = #{gradeName}
+		    </if>
+		    <if test="minPoint != null">
+		    	,g.min_point = #{minPoint}
+		    </if>
+		    <if test="maxPoint != null">
+		    	,g.max_point = #{maxPoint}
+		    </if>
+		    <if test="gradeColor != null">
+		    	,g.grade_color = #{gradeColor}
+		    </if>
+	    WHERE g.grade_id = #{gradeId}
+	</select>
+</mapper>
